@@ -19,9 +19,9 @@ namespace ConsoleUI
         }
         static void GetAllMethod(ICarService carService)
         {
-            foreach (var item in carService.GetAll())
-            {
-                Console.WriteLine(item.Id + " " + item.ModelYear + " " + item.BrandId + " " + item.ColorId + " " + item.DailyPrice + " " + item.Description);
+            foreach (var item in carService.CarDetailDtos())
+            {   //Console.WriteLine(item.Id + " " + item.ModelYear + " " + item.BrandId + " " + item.ColorId + " " + item.DailyPrice + " " + item.Description);
+                Console.WriteLine(item.BrandName+" "+ item.ColorName+ " "+item.DailyPrice);
             }
             Console.WriteLine("Hello World!");
         }
