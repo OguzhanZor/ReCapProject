@@ -1,5 +1,6 @@
 ﻿using Business.Abstract;
 using Business.Concrete;
+using DataAccess.Concrete.EntityFramework;
 using DataAccess.Concrete.InMemory;
 using System;
 
@@ -9,9 +10,9 @@ namespace ConsoleUI
     {
         static void Main(string[] args)
         {
-            ICarService carService = new CarManager(new InMemoryCarDal());
+            ICarService carService = new CarManager(new EfCarDal());
             GetAllMethod(carService);
-            GetByIdMethot(carService);
+           // GetByIdMethot(carService);
 
           
 
@@ -27,7 +28,7 @@ namespace ConsoleUI
 
         static void GetByIdMethot(ICarService carService)
         {
-            var car = carService.GetById(2);
+            var car = carService.GetById(1);
             Console.WriteLine(car.Id + " " + car.ModelYear + " " + car.Description);
         }
     }

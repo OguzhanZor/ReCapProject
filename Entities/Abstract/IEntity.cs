@@ -4,6 +4,7 @@ using System.Text;
 
 namespace Entities.Abstract
 {
+    //IEntity interface bir database nesnesi oldugunu söyler
     public interface IEntity
     {
     }
