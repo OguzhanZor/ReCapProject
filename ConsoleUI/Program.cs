@@ -12,24 +12,39 @@ namespace ConsoleUI
         {
             ICarService carService = new CarManager(new EfCarDal());
             GetAllMethod(carService);
-           // GetByIdMethot(carService);
+            GetByIdMethot(carService);
 
           
 
         }
         static void GetAllMethod(ICarService carService)
         {
-            foreach (var item in carService.CarDetailDtos())
-            {   //Console.WriteLine(item.Id + " " + item.ModelYear + " " + item.BrandId + " " + item.ColorId + " " + item.DailyPrice + " " + item.Description);
-                Console.WriteLine(item.BrandName+" "+ item.ColorName+ " "+item.DailyPrice);
+            var result = carService.CarDetailDtos();
+            if (result.Success)
+            {
+                foreach (var item in result.Data)
+                {   //Console.WriteLine(item.Id + " " + item.ModelYear + " " + item.BrandId + " " + item.ColorId + " " + item.DailyPrice + " " + item.Description);
+                    Console.WriteLine(item.BrandName + " " + item.ColorName + " " + item.DailyPrice);
+                }
+
             }
+            else
+                Console.WriteLine(result.Message);
+
             Console.WriteLine("Hello World!");
         }
 
         static void GetByIdMethot(ICarService carService)
         {
-            var car = carService.GetById(1);
-            Console.WriteLine(car.Id + " " + car.ModelYear + " " + car.Description);
+           
+            var result = carService.GetById(1);
+            if (result.Success)
+            {
+                Console.WriteLine(result.Data.Id + " " + result.Data.ModelYear + " " + result.Data.Description);
+
+            }
+            else
+                Console.WriteLine(result.Message);
         }
     }
 }
