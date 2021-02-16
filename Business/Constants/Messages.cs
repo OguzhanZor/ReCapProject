@@ -10,6 +10,6 @@ namespace Business.Constants
         public static string CarIdInvalid = "Araba ıd si gecersiz";
         public static string MaintenanceTime = "Sistem bakımda";
         public static string CarsListed = "Arabalar listeleniyor";
-        public static string CarUpdated = "Araba güncellendi"s;
+        public static string CarUpdated = "Araba güncellendi";
     }
 }
