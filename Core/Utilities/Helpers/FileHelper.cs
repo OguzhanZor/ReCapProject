@@ -15,7 +15,7 @@ namespace Core.Utilities.Helpers
             FileInfo fileInfo = new FileInfo(formFile.FileName);
 
             string fileExtension = fileInfo.Extension;
-            string path = Path.Combine(Directory.GetParent(Directory.GetCurrentDirectory()).FullName + @"\WebAPI\Images");
+            string path = Environment.CurrentDirectory+@"\wwwroot\Images";
             var newPath = Guid.NewGuid().ToString() + fileExtension;
 
             var result = $@"{path}\{newPath}";
