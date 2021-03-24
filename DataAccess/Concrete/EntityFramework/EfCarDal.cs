@@ -13,6 +13,7 @@ namespace DataAccess.Concrete.EntityFramework
 {
     public class EfCarDal : EfEntityRepositoryBase<Car, DbReCapContext>, ICarDal
     {
+        public string aaaaa() { return "dsadsa"; }
         public List<CarDetailDto> CarDetailDtos()
         {
             using (DbReCapContext context = new DbReCapContext())
@@ -23,13 +24,15 @@ namespace DataAccess.Concrete.EntityFramework
                              join c in context.Colors
                              on p.ColorId equals c.Id
                              select new CarDetailDto
-                             { 
+                             {
                                  Id = p.Id,
+                                 ModelYear = p.ModelYear,
                                  ColorId = c.Id,
                                  BrandId = b.Id,
                                  BrandName = b.Name,
                                  ColorName = c.Name,
-                                 DailyPrice = p.DailyPrice
+                                 DailyPrice = p.DailyPrice,
+                                 Description=p.Description
                              };
                 return result.ToList();
             }

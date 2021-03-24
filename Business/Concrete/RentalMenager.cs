@@ -3,6 +3,7 @@ using Core.Utilities.Results.Abstract;
 using Core.Utilities.Results.Concrete;
 using DataAccess.Abstract;
 using Entities.Concrete;
+using Entities.DTOs;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -53,6 +54,11 @@ namespace Business.Concrete
         {
             _rentalDal.Update(rental);
             return new SuccessResult("Rental Güncellendi");
+        }
+
+        public IDataResult<List<RentalDetailDto>> CarDetailDtos()
+        {
+            return new SuccessDataResult<List<RentalDetailDto>>(_rentalDal.RentalDetailDtos(),"Rental Detayları listelendi");
         }
     }
 }
