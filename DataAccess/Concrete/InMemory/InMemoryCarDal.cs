@@ -31,7 +31,7 @@ namespace DataAccess.Concrete.InMemory
             _cars.Add(car);
         }
 
-        public List<CarDetailDto> CarDetailDtos()
+        public List<CarDetailDto> CarDetailDtos(int carId)
         {
             throw new NotImplementedException();
         }

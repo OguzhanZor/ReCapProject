@@ -10,63 +10,54 @@ namespace Core.Utilities.Helpers
 {
     public class FileHelper
     {
-        public static string NewPath(IFormFile formFile)
+
+        public static string Add(IFormFile file)
         {
-            FileInfo fileInfo = new FileInfo(formFile.FileName);
-
-            string fileExtension = fileInfo.Extension;
-            string path = Environment.CurrentDirectory+@"\wwwroot\Images";
-            var newPath = Guid.NewGuid().ToString() + fileExtension;
-
-            var result = $@"{path}\{newPath}";
-            return result;
-        }
-
-        public static string Add(IFormFile formFile)
-        {
-            var path = Path.GetTempFileName();
-
-            if (formFile.Length > 0)
+            string path = Environment.CurrentDirectory + @"\wwwroot\images\";
+            var sourcepath = Path.GetTempFileName();
+            if (file.Length > 0)
             {
-                using (var stream = new FileStream(path, FileMode.Create))
+                using (var stream = new FileStream(sourcepath, FileMode.Create))
                 {
-                    formFile.CopyTo(stream);
+                    file.CopyTo(stream);
+                    stream.Flush();
                 }
             }
-            var result = NewPath(formFile);
+            var path1 = newPath(file);
+            var result = path + path1;
 
-            File.Move(path, result);
-
-            return result;
+            File.Move(sourcepath, result);
+            return "/Images/" + path1;
         }
-
         public static IResult Delete(string path)
         {
-            try
-            {
-                File.Delete(path);
-            }
-            catch (Exception exception)
-            {
-                return new ErrorResult(exception.Message);
-            }
+            File.Delete(path);
             return new SuccessResult();
         }
-
-        public static string Update(string path, IFormFile formFile)
+        public static string Update(string sourcePath, IFormFile file)
         {
-            // burada add ekleme olarak bir düsün
-
-            var result = NewPath(formFile).ToString();
-            if (path.Length > 0)
+            var result = newPath(file);
+            if (sourcePath.Length > 0)
             {
                 using (var stream = new FileStream(result, FileMode.Create))
                 {
-                    formFile.CopyTo(stream);
+                    file.CopyTo(stream);
                 }
             }
-            File.Delete(path);
+            File.Delete(sourcePath);
             return result;
+        }
+        public static string newPath(IFormFile file)
+        {
+            FileInfo ff = new FileInfo(file.FileName);
+            string fileExtension = ff.Extension;//extension uzantı demek dosyanın uzantısını aldım png, jpeg gibi düşünün
+
+            //string path = Environment.CurrentDirectory + @"\wwwroot\images"; // Environment.CurrentDirectory geçerli çalışma dizininin tam yolunu alır veya ayarlar
+            var newPath = Guid.NewGuid().ToString() + "_" + DateTime.Now.Month + "_" + DateTime.Now.Day + "_" + DateTime.Now.Year + fileExtension;
+            //  Guid bilgisayar yazılımlarında tanımlayıcı olarak kullanılan benzersiz bir referans numarasıdır
+
+            //string result = $@"{path}\{newPath}";
+            return newPath;
         }
     }
 }

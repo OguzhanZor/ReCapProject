@@ -19,11 +19,13 @@ namespace Business.Concrete
 {
     public class CarManager : ICarService
     {
-        ICarDal _carDal;
+        private ICarDal _carDal;
+        private ICarImageService _carImageService;
 
-        public CarManager(ICarDal carDal)
+        public CarManager(ICarDal carDal, ICarImageService carImageService)
         {
             _carDal = carDal;
+            _carImageService = carImageService;
         }
 
         [SecuredOperation("product.add,admin")]
@@ -32,11 +34,6 @@ namespace Business.Concrete
         {
             _carDal.Add(car);
             return new SuccessResult(Messages.CarAdded);
-        }
-
-        public IDataResult<List<CarDetailDto>> CarDetailDtos()
-        {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.CarDetailDtos());
         }
 
         public IResult Delete(Car car)
@@ -68,9 +65,9 @@ namespace Business.Concrete
             return new SuccessDataResult<List<Car>>(_carDal.GetAll(p=>p.ColorId==colorId));
         }
 
-        public IDataResult<List<CarDetailDto>> GetCarDetailDto()
+        public IDataResult<List<CarDetailDto>> GetCarDetailDto(int carId)
         {
-            return new SuccessDataResult<List<CarDetailDto>>(_carDal.CarDetailDtos());
+            return new SuccessDataResult<List<CarDetailDto>>(_carDal.CarDetailDtos(carId));
         }
 
         public IResult Update(Car car)
